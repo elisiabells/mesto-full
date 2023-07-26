@@ -1,0 +1,15 @@
+.element__text {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   background-color: #fff;
+   min-height: 77px;
+   padding-left: 20px;
+   padding-right: 15px;
+}
+
+@media screen and (max-width: 500px) {
+   .elements__text {
+      min-width: 246px;
+   }
+}

@@ -1,0 +1,19 @@
+.signup__submit {
+   width: 358px;
+   height: 50px;
+   border-radius: 2px;
+   border: none;
+   margin: 0;
+   margin-top: 216px;
+   padding: 0;
+   background-color: #fff;
+   color: #000;
+   font-size: 18px;
+   font-weight: 400;
+   line-height: 21.78px;
+}
+
+.signup__submit:hover {
+   cursor: pointer;
+   opacity: 0.8;
+}
