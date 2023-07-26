@@ -10,6 +10,7 @@ const usersRouter = require('./routes/users');
 const cardsRouter = require('./routes/cards');
 const NotFound = require('./utils/errors/NotFound');
 const errorHandler = require('./middlewares/errorHandler');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 const { login, createUser } = require('./controllers/users');
 const { newUserValidation, userAuthValidation } = require('./middlewares/validations');
 
@@ -25,6 +26,9 @@ app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
 
+// Подключаем логгер запросов
+app.use(requestLogger);
+
 app.post('/signin', userAuthValidation, login);
 app.post('/signup', newUserValidation, createUser);
 
@@ -38,6 +42,9 @@ app.use('/*', (req, res, next) => {
 });
 
 app.use(errors());
+
+// Подключаем логгер ошибок
+app.use(errorLogger);
 
 app.use(errorHandler);
 
