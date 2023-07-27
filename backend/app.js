@@ -31,6 +31,12 @@ app.use(bodyParser.json());
 // Подключаем логгер запросов
 app.use(requestLogger);
 
+app.get('/crash-test', () => {
+  setTimeout(() => {
+    throw new Error('Сервер сейчас упадёт');
+  }, 0);
+});
+
 app.post('/signin', userAuthValidation, login);
 app.post('/signup', newUserValidation, createUser);
 
