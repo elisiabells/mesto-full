@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 84.201.152.131
 
-Frontend https://github.com/elisiabells/react-mesto-auth
+Frontend https://mestobyelisiabells.nomoreparties.sbs
 
-Backend https://github.com/elisiabells/express-mesto-gha
+Backend https://api.mestobyelisiabells.nomoredomains.sbs
