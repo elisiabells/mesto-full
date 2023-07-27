@@ -21,10 +21,11 @@ module.exports.login = (req, res, next) => {
             throw new ErrorAccess('Неправильные почта или пароль');
           }
 
+          const { NODE_ENV, JWT_SECRET } = process.env;
+
           const token = jwt.sign(
             { _id: user._id },
-            'some-secret-key',
-            { expiresIn: '7d' },
+            NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret'
           );
 
           res.cookie('jwt', token, {
