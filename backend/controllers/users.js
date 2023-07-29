@@ -29,18 +29,11 @@ module.exports.login = (req, res, next) => {
             SECRET_KEY,
           );
 
-          res.cookie('jwt', token, {
-            maxAge: 3600000 * 24 * 7,
-            httpOnly: true,
-            sameSite: true,
-          });
-
           return res.send({ token });
         });
     })
     .catch(next);
 };
-
 module.exports.getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send(users))
