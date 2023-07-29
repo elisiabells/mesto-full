@@ -2,7 +2,17 @@ const jwt = require('jsonwebtoken');
 const ErrorAccess = require('../utils/errors/ErrorAccess');
 
 const auth = (req, res, next) => {
-  const token = req.cookies.jwt;
+  let token = req.cookies.jwt;
+
+  if (!token) {
+    const authHeader = req.headers.authorization;
+
+    if (authHeader && authHeader.startsWith('Bearer ')) {
+      const [, tokenFromHeader] = authHeader.split(' ');
+      token = tokenFromHeader;
+    }
+  }
+
   if (!token) {
     return next(new ErrorAccess('Необходима авторизация'));
   }
