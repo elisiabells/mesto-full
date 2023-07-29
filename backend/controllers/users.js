@@ -22,10 +22,11 @@ module.exports.login = (req, res, next) => {
           }
 
           const { NODE_ENV, JWT_SECRET } = process.env;
+          const SECRET_KEY = NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret';
 
           const token = jwt.sign(
             { _id: user._id },
-            NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret',
+            SECRET_KEY,
           );
 
           res.cookie('jwt', token, {

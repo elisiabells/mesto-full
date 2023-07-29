@@ -19,8 +19,11 @@ const auth = (req, res, next) => {
 
   let payload;
 
+  const { NODE_ENV, JWT_SECRET } = process.env;
+  const SECRET_KEY = NODE_ENV === 'production' ? JWT_SECRET : 'dev-secret';
+
   try {
-    payload = jwt.verify(token, 'some-secret-key');
+    payload = jwt.verify(token, SECRET_KEY);
   } catch (err) {
     return next(new ErrorAccess('Необходима авторизация'));
   }
