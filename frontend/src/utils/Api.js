@@ -1,7 +1,7 @@
 class Api {
-   constructor(api) {
-      this._url = api.url;
-      this._headers = api.headers;
+   constructor(options) {
+      this._url = options.url;
+      this._headers = options.headers;
    }
 
    _checkResponse(res) {
@@ -12,98 +12,116 @@ class Api {
       }
    }
 
-   // 1. Загрузка информации о пользователе с сервера.
-   getUserInfo() {
-      return fetch(`${this._url}/users/me`, { headers: this._headers })
-         .then(this._checkResponse);
+   // Получить информацию о пользователе
+   getUserInfo(token) {
+      return fetch(`${this._url}/users/me`, { 
+         headers: { 
+            ...this._headers, 
+            Authorization: `Bearer ${token}` 
+         } 
+      })
+      .then(this._checkResponse);
    }
 
-   // 2. Загрузка карточек с сервера.
-   getInitialCards() {
-      return fetch(`${this._url}/cards`, { headers: this._headers })
-         .then(this._checkResponse);
+   // Получить начальные карточки
+   getInitialCards(token) {
+      return fetch(`${this._url}/cards`, { 
+         headers: { 
+            ...this._headers, 
+            Authorization: `Bearer ${token}` 
+         } 
+      })
+      .then(this._checkResponse);
    }
 
-   // 3. Редактирование профиля. 
-   setUserInfo(data) {
+   // Установить информацию о пользователе
+   setUserInfo(data, token) {
       return fetch(`${this._url}/users/me`, {
          method: "PATCH",
-         headers: this._headers,
+         headers: {
+            ...this._headers,
+            Authorization: `Bearer ${token}`
+         },
          body: JSON.stringify({
             name: data.name,
             about: data.about
          }),
       })
-         .then(this._checkResponse);
+      .then(this._checkResponse);
    }
 
-   // 4. Добавление новой карточки.
-   addNewCard(data) {
+   // Добавить новую карточку
+   addNewCard(data, token) {
       return fetch(`${this._url}/cards`, {
          method: "POST",
-         headers: this._headers,
+         headers: {
+            ...this._headers,
+            Authorization: `Bearer ${token}`
+         },
          body: JSON.stringify({
             name: data.name,
             link: data.link
          }),
       })
-         .then(this._checkResponse);
+      .then(this._checkResponse);
    }
 
-   // 5. Постановка лайка.
-   like(id) {
+   // Поставить лайк
+   like(id, token) {
       return fetch(`${this._url}/cards/${id}/likes`, {
          method: "PUT",
-         headers: this._headers,
+         headers: {
+            ...this._headers,
+            Authorization: `Bearer ${token}`
+         },
       })
-         .then(this._checkResponse);
+      .then(this._checkResponse);
    }
 
-   // 6. Снятие лайка.
-   dislike(id) {
+   // Снять лайк
+   dislike(id, token) {
       return fetch(`${this._url}/cards/${id}/likes`, {
          method: "DELETE",
-         headers: this._headers,
+         headers: {
+            ...this._headers,
+            Authorization: `Bearer ${token}`
+         },
       })
-         .then(this._checkResponse);
+      .then(this._checkResponse);
    }
 
-   // 7. Удаление карточки.
-   deleteCard(id) {
+   // Удалить карточку
+   deleteCard(id, token) {
       return fetch(`${this._url}/cards/${id}`, {
          method: "DELETE",
-         headers: this._headers,
+         headers: {
+            ...this._headers,
+            Authorization: `Bearer ${token}`
+         },
       })
-         .then(this._checkResponse);
+      .then(this._checkResponse);
    }
 
-   // 8. Обновление аватара пользователя.
-   changeAvatar(data) {
+   // Изменить аватар пользователя
+   changeAvatar(data, token) {
       return fetch(`${this._url}/users/me/avatar`, {
          method: "PATCH",
-         headers: this._headers,
+         headers: {
+            ...this._headers,
+            Authorization: `Bearer ${token}`
+         },
          body: JSON.stringify({
             avatar: data.avatar
          })
       })
-         .then(this._checkResponse);
-   }
-
-   // 9. Изменение статуса лайка
-   changeLike(cardId, isLiked) {
-      const method = isLiked ? 'PUT' : 'DELETE';
-      return fetch(`${this._url}/cards/likes/${cardId}`, {
-         method: method,
-         headers: this._headers,
-      })
-         .then(this._checkResponse);
+      .then(this._checkResponse);
    }
 }
 
+// Сначала используйте новый URL и новые заголовки
 export const api = new Api({
    url: 'https://api.mestobyelisiabells.nomoredomains.sbs',
    headers: {
-      authorization: 'f221fc97-169c-4f6c-88e9-38cc56bf9efd',
       'Content-Type': 'application/json'
    }
 });
