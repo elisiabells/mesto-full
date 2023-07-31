@@ -145,23 +145,23 @@ function App() {
   }
 
   // Проверка токена
-   useEffect(() => {
+  useEffect(() => {
     const jwt = localStorage.getItem('jwt');
     console.log(`это пришло из useEffect ${jwt}`);
     if (jwt) {
       auth.getContent(jwt)
         .then((res) => {
-          if (res) {
+          if (res && res.data) {
             setLoggedIn(true);
-            setUserEmail(res.data.email)
-            navigate("/users/me");
+            setUserEmail(res.data.email);
+            navigate('/users/me');
           }
         })
         .catch((err) => {
           console.log(err);
         });
     }
-  }, []);
+  }, [navigate]);
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);
