@@ -33,7 +33,7 @@ function App() {
   const [tooltipError, setTooltipError] = useState(false);
 
   useEffect(() => {
-    Promise.all([api.getUserInfo(), api.getInitialCards()])
+    loggedIn && Promise.all([api.getUserInfo(), api.getInitialCards()])
       .then(([userInfo, initialCards]) => {
         setCurrentUser(userInfo);
         setCards(initialCards);
@@ -41,11 +41,11 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [loggedIn]);
 
   // ставим лайки
   const handleCardLike = (card) => {
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id);
 
     api.changeLike(card._id, !isLiked)
       .then((newCard) => {
@@ -112,11 +112,12 @@ function App() {
     return auth
       .authorize(email, password)
       .then((data) => {
+        console.log(`это пришло из handleLogin ${JSON.stringify(data)}`);
         if (data.token) {
           localStorage.setItem('jwt', data.token);
           setLoggedIn(true);
           setUserEmail(email);
-          navigate('/');
+          navigate('/users/me');
         }
       })
       .catch((err) => {
@@ -146,20 +147,25 @@ function App() {
   // Проверка токена
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
+    console.log(`это пришло из useEffect ${jwt}`);
+
     if (jwt) {
       auth.getContent(jwt)
         .then((res) => {
-          if (res) {
+          if (res && res.data) {
             setLoggedIn(true);
-            setUserEmail(res.data.email)
-            navigate("/users/me");
+            setUserEmail(res.data.email);
+            navigate('/users/me');
           }
         })
         .catch((err) => {
           console.log(err);
+          navigate('/signin');
         });
+    } else {
+      navigate('/signin');
     }
-  }, []);
+  }, [navigate]);
 
   const handleEditProfileClick = () => {
     setIsEditProfilePopupOpen(true);

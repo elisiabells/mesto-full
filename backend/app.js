@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
+const cors = require('cors');
 const { errors } = require('celebrate');
 
 const auth = require('./middlewares/auth');
@@ -17,8 +18,9 @@ const { login, createUser } = require('./controllers/users');
 const { newUserValidation, userAuthValidation } = require('./middlewares/validations');
 
 const app = express();
+app.use(cors());
 
-mongoose.connect('mongodb://localhost:27017/mestodb', {
+mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   family: 4,
@@ -27,8 +29,6 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
 app.use(helmet());
 app.use(cookieParser());
 app.use(bodyParser.json());
-
-// Подключаем логгер запросов
 app.use(requestLogger);
 
 app.get('/crash-test', () => {
@@ -50,10 +50,7 @@ app.use('/*', (req, res, next) => {
 });
 
 app.use(errors());
-
-// Подключаем логгер ошибок
 app.use(errorLogger);
-
 app.use(errorHandler);
 
 app.listen(3000, () => {
