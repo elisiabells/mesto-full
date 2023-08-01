@@ -1,8 +1,15 @@
 import React from 'react';
 
 function ImagePopup({ card, onClose }) {
+  // Закрытие при нажатии на overflow
+  function handleClick(e) {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  }
+
   return (
-    <div className={`popup popup_img ${card ? 'popup_opened' : ''}`}>
+    <div className={`popup popup_img ${card ? 'popup_opened' : ''}`} onClick={handleClick}>
       <div className="popup__full-img-container">
         <button type="button" className="popup__button-close" onClick={onClose}></button>
         <figure className="popup__full-img">

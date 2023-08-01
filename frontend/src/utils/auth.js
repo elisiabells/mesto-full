@@ -32,6 +32,7 @@ export const authorize = (email, password) => {
 
 export const getContent = () => {
    const token = localStorage.getItem('jwt');
+   console.log(token)
    return fetch(`${BASE_URL}/users/me`, {
       method: "GET",
       headers: {
