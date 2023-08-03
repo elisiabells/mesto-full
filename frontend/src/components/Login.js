@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const Login = ({ onLogin }) => {
-   const [email, setEmail] = useState("");
+   const [email, setEmail] = useState(localStorage.getItem('email') || '');
    const [password, setPassword] = useState("");
    const [errorMessage, setErrorMessage] = useState("");
    const navigate = useNavigate();
@@ -10,6 +10,7 @@ const Login = ({ onLogin }) => {
    const handleSubmit = (e) => {
       e.preventDefault();
       setErrorMessage("");
+      localStorage.setItem('email', email);
       onLogin(email, password)
          .then(() => {
             navigate('/');
