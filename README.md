@@ -10,8 +10,8 @@
 - *Ставить "лайки" фотографиям.*
 
 ### Стек Технологий:
-**Frontend:** HTML5, CSS3, JS, React.
-**Backend:** Node.js, Express.js.
+**Frontend:** HTML5, CSS3, JS, React.  
+**Backend:** Node.js, Express.js.  
 **База Данных:** MongoDB.
 
 В рамках этого репозитория реализованы фронтенд и бэкенд части приложения с возможностями: авторизации, регистрации пользователей, операциями с карточками и пользователями. Бэкенд находится в директории `backend/`, а фронтенд — в `frontend/`.
@@ -36,5 +36,5 @@
 `npm start` — запускает приложение.
 
 ## Ссылки на проект
-`Frontend` https://mestobyelisiabells.nomoreparties.sbs  
-`Backend` https://api.mestobyelisiabells.nomoredomains.sbs
+Frontend https://mestobyelisiabells.nomoreparties.sbs  
+Backend https://api.mestobyelisiabells.nomoredomains.sbs
